@@ -1,7 +1,5 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
-
 void main() {
   runApp(const MainApp());
 }
@@ -14,15 +12,15 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: "/",
       routes: {
-        "/": (context) => Homescreen(),
+        "/": (context) => const Homescreen(),
         "/detailsScreen": (context) => const DetailsScreen(),
+        "/settings":(context) => const Settings(),
       },
     );
   }
 }
 
 class Homescreen extends StatefulWidget {
-
   const Homescreen({super.key});
 
   @override
@@ -69,7 +67,7 @@ class _HomescreenState extends State<Homescreen> {
           );
         }).toList(),
       ),
-      drawer: MyDrawer(),
+      drawer: const MyDrawer(),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -104,9 +102,12 @@ class DetailsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Align(
           alignment: Alignment.centerLeft,
-          child: Text("DetailsScreen",style: TextStyle(color: Colors.black),),
+          child: Text(
+            "DetailsScreen",
+            style: TextStyle(color: Colors.black),
+          ),
         ),
-                flexibleSpace: Container(
+        flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(colors: [
               Color.fromRGBO(131, 226, 255, 1),
@@ -134,6 +135,7 @@ class DetailsScreen extends StatelessWidget {
 }
 
 class MyDrawer extends StatelessWidget {
+  const MyDrawer({super.key});
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -141,28 +143,78 @@ class MyDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           const UserAccountsDrawerHeader(
-            accountName: Text("Gerd Gierig"),
-            accountEmail: Text("gerdgierig@gmx.de"),
+            accountName: Text(
+              "Gerd Gierig",
+              style: TextStyle(color: Colors.black),
+            ),
+            accountEmail: Text(
+              "gerdgierig@gmx.de",
+              style: TextStyle(color: Colors.black),
+            ),
             currentAccountPicture: CircleAvatar(
               backgroundColor: Colors.white,
               child: Icon(Icons.person),
             ),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(colors: [
+                Color.fromRGBO(131, 226, 255, 1),
+                Color.fromRGBO(11, 198, 255, 1)
+              ], begin: Alignment.bottomLeft, end: Alignment.topRight),
+            ),
           ),
           ListTile(
-            leading: Icon(Icons.home),
-            title: Text('Startseite'),
+            leading: const Icon(Icons.home),
+            title: const Text(
+              "Homescreen",
+              style: TextStyle(color: Colors.black),
+            ),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
-            leading: Icon(Icons.settings),
-            title: Text("Einstellungen"),
+            leading: const Icon(Icons.settings),
+            title: const Text(
+              "Settings",
+              style: TextStyle(color: Colors.black),
+            ),
             onTap: () {
-              Navigator.pop(context);
-            },
+              Navigator.pushNamed(context, "/settings");
+            }
           ),
         ],
+      ),
+    );
+  }
+}
+
+class Settings extends StatelessWidget {
+  const Settings({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Align(
+          alignment: Alignment.centerLeft,
+          child: Text("Ape", style: TextStyle(color: Colors.black)),
+        ),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(colors: [
+              Color.fromRGBO(131, 226, 255, 1),
+              Color.fromRGBO(11, 198, 255, 1)
+            ], begin: Alignment.bottomLeft, end: Alignment.topRight),
+          ),
+        ),
+      ),
+      body: Center(
+        child: Image.asset(
+          "assets/images/ape.jpg"),
+      ),
+      floatingActionButton: FloatingActionButton(onPressed:() {
+        Navigator.pushNamed(context, "/");
+      } 
       ),
     );
   }
