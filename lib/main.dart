@@ -21,7 +21,15 @@ class MainApp extends StatelessWidget {
   }
 }
 
-class Homescreen extends StatelessWidget {
+class Homescreen extends StatefulWidget {
+
+  const Homescreen({super.key});
+
+  @override
+  State<Homescreen> createState() => _HomescreenState();
+}
+
+class _HomescreenState extends State<Homescreen> {
   final List<String> products = [
     "Produkt 1",
     "Produkt 2",
@@ -29,7 +37,6 @@ class Homescreen extends StatelessWidget {
     "Produkt 4",
     "Produkt 5"
   ];
-  Homescreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +44,7 @@ class Homescreen extends StatelessWidget {
       appBar: AppBar(
         title: const Align(
           alignment: Alignment.centerLeft,
-          child: Text("Placeholder", style: TextStyle(color: Colors.black)),
+          child: Text("Homescreen", style: TextStyle(color: Colors.black)),
         ),
         flexibleSpace: Container(
           decoration: const BoxDecoration(
@@ -62,6 +69,7 @@ class Homescreen extends StatelessWidget {
           );
         }).toList(),
       ),
+      drawer: MyDrawer(),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -96,7 +104,15 @@ class DetailsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Align(
           alignment: Alignment.centerLeft,
-          child: Text("DetailsScreen"),
+          child: Text("DetailsScreen",style: TextStyle(color: Colors.black),),
+        ),
+                flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(colors: [
+              Color.fromRGBO(131, 226, 255, 1),
+              Color.fromRGBO(11, 198, 255, 1)
+            ], begin: Alignment.bottomLeft, end: Alignment.topRight),
+          ),
         ),
       ),
       body: Center(
@@ -112,6 +128,41 @@ class DetailsScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class MyDrawer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          const UserAccountsDrawerHeader(
+            accountName: Text("Gerd Gierig"),
+            accountEmail: Text("gerdgierig@gmx.de"),
+            currentAccountPicture: CircleAvatar(
+              backgroundColor: Colors.white,
+              child: Icon(Icons.person),
+            ),
+          ),
+          ListTile(
+            leading: Icon(Icons.home),
+            title: Text('Startseite'),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.settings),
+            title: Text("Einstellungen"),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
       ),
     );
   }
